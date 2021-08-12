@@ -31,8 +31,11 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$rootProject.ext.coreKtxVersion"
-    implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompatVersion"
-    implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.ext.kotlinReflectVersion"
+    api "androidx.core:core-ktx:$rootProject.ext.coreKtxVersion"
+    api "androidx.appcompat:appcompat:$rootProject.ext.appcompatVersion"
+    api "com.google.android.material:material:$rootProject.ext.materialVersion"
+    api "org.jetbrains.kotlin:kotlin-reflect:$rootProject.ext.kotlinReflectVersion"
+
+    api 'org.slf4j:slf4j-api:1.7.25'
+    api 'com.github.tony19:logback-android:2.0.0'
 }

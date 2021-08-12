@@ -1,4 +1,4 @@
-package cn.funcoding.github.common
+package cn.funcoding.github.common.properties
 
 import java.io.File
 import java.io.FileInputStream

@@ -1,4 +1,4 @@
-package cn.funcoding.github.common
+package cn.funcoding.github.common.sharepreferences
 
 import android.content.Context
 import java.lang.IllegalArgumentException
@@ -20,8 +20,10 @@ class PreferencesDelegate<T>(
     }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        return findPreferences(key)
+        return findPreferences(findProperName(property))
     }
+
+    private fun findProperName(property: KProperty<*>) = if (key.isEmpty()) property.name else key
 
     private fun findPreferences(key: String): T {
         return when (defValue) {
@@ -36,7 +38,7 @@ class PreferencesDelegate<T>(
     }
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-        putPreferences(key, value)
+        putPreferences(findProperName(property), value)
     }
 
     private fun putPreferences(key: String, value: T) {
