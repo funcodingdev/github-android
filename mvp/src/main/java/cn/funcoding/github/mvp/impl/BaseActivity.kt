@@ -2,7 +2,7 @@ package cn.funcoding.github.mvp.impl
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import cn.funcoding.github.mvp.IMvpView
 import cn.funcoding.github.mvp.IPresenter
 import kotlin.reflect.KClass
@@ -11,8 +11,8 @@ import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.jvm.jvmErasure
 
-abstract class BaseFragment<out P : BasePresenter<IMvpView<P>>> :
-    IMvpView<P>, Fragment() {
+abstract class BaseActivity<out P : BasePresenter<BaseActivity<P>>> : IMvpView<P>,
+    AppCompatActivity() {
     final override val presenter: P
 
     init {
@@ -22,7 +22,7 @@ abstract class BaseFragment<out P : BasePresenter<IMvpView<P>>> :
 
     fun createPresenterKt(): P {
         sequence<List<KType>> {
-            var thisClass: KClass<*> = this@BaseFragment::class
+            var thisClass: KClass<*> = this@BaseActivity::class
             while (true) {
                 yield(thisClass.supertypes)
                 thisClass = thisClass.supertypes.firstOrNull()?.jvmErasure ?: break
@@ -73,10 +73,7 @@ abstract class BaseFragment<out P : BasePresenter<IMvpView<P>>> :
         presenter.onSaveInstanceState(outState)
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        presenter.onViewStateRestored(savedInstanceState)
-    }
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {}
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
