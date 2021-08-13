@@ -2,6 +2,8 @@ package cn.funcoding.github.network
 
 import cn.funcoding.github.AppContext
 import cn.funcoding.github.common.ext.ensureDir
+import cn.funcoding.github.network.interceptors.AcceptInterceptor
+import cn.funcoding.github.network.interceptors.AuthInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,7 +19,7 @@ private val cacheFile by lazy {
     File(AppContext.cacheDir, "webServiceApi").apply { ensureDir() }
 }
 
-val retrofit by lazy {
+val retrofit: Retrofit by lazy {
     Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -28,6 +30,8 @@ val retrofit by lazy {
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .cache(Cache(cacheFile, (1024 * 1024 * 1024)))
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addInterceptor(AuthInterceptor())
+                .addInterceptor(AcceptInterceptor())
                 .build()
         )
         .baseUrl(BASE_URL)

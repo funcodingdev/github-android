@@ -15,7 +15,7 @@ interface AuthApi {
     @PUT("/authorizations/${Configs.Account.clientId}/{fingerPrint}")
     fun createAuthorization(
         @Body req: AuthorizationReq,
-        @Path("fingerPrint") fingerPrint: String
+        @Path("fingerPrint") fingerPrint: String = Configs.Account.fingerPrint
     ): Observable<AuthorizationRsp>
 
     @DELETE("/authorizations/{id}")

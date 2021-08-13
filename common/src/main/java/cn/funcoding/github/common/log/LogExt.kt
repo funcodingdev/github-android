@@ -3,6 +3,8 @@ package cn.funcoding.github.common.log
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+const val TAG = "[Github]"
+
 val loggerMap = HashMap<Class<*>, Logger>()
 
 inline val <reified T> T.logger: Logger

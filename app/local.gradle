@@ -1,0 +1,13 @@
+def debugPropertiesFile = new File(rootDir, "debug.properties")
+if (debugPropertiesFile.exists()) {
+    def properties = new Properties()
+    properties.load(new FileInputStream(debugPropertiesFile))
+    def propertyNames = properties.propertyNames()
+    while (propertyNames.hasMoreElements()) {
+        def propertyName = propertyNames.nextElement()
+        project.extensions.add(propertyName, properties.getProperty(propertyName))
+    }
+} else {
+    project.extensions.add('username', "")
+    project.extensions.add('password', "")
+}
